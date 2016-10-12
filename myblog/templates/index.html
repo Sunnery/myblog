@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+     <style>
+        body{font:12px arial;text-align:center;background:#fff}body,p,form,ul{margin:0;padding:0}body,form,#fm{position:relative}td{text-align:left}img{border:0}a{color:#00c}a:active{color:#f60}#u{padding:7px 10px 3px 0;text-align:right}#m{width:680px;margin:0 auto}#nv{font-size:16px;margin:0 0 4px;text-align:left;text-indent:117px}#nv a,#nv b,.btn,#lk{font-size:14px}#fm{padding-left:90px;text-align:left}#kw{width:404px;height:22px;padding:4px 7px;padding:6px 7px 2px\9;font:16px arial;background:url(http://www.baidu.com/img/i2.png) no-repeat;border:1px solid #cdcdcd;border-color:#9a9a9a #cdcdcd #cdcdcd #9a9a9a;vertical-align:top}.btn{width:95px;height:32px;padding:0;padding-top:2px\9;border:0;background:#ddd url(http://www.baidu.com/img/i2.png) 0 -35px;cursor:pointer}.btn_h{background-position:-100px -35px}#kw,.btn_wr{margin:0 5px 0 0}.btn_wr{width:97px;height:34px;display:inline-block;background:url(http://www.baidu.com/img/i2.png) no-repeat -202px bottom;_padding-top:1px;*position:relative}#lk{margin:33px 0}#lk span{font:14px "宋体"}#lm{height:60px}#lh{margin:16px 0 5px;word-spacing:3px}#mCon{position:absolute;right:7px;top:10px;cursor:pointer;padding:0 18px 0 0;background:url(http://www.baidu.com/img/arr.gif) no-repeat right 0}#mCon span{color:#00c;cursor:default;display:block;*padding-top:2px}#mCon .hw{text-decoration:underline;cursor:pointer}#mMenu{width:56px;border:1px solid #9a99ff;list-style:none;position:absolute;right:7px;top:28px;display:none;background:#fff}#mMenu a{width:100%;height:100%;display:block;line-height:22px;text-indent:6px;text-decoration:none}#mMenu a:hover{background:#d9e1f6}#mMenu .ln{height:1px;background:#ccf;overflow:hidden;margin:2px;font-size:1px;line-height:1px}#cp,#cp a{color:#77c}
+      </style>
+</head>
+<body>
+    <div id="m" style="margin-top: 150px;">
+        <p id="lg">
+            <img src="static/fuck_baidu.png" width="270" height="129" usemap="#mp"></p>
+          <p id="nv">
+        <div id="fm">
+            <form name="f" action="/search">
+              <input type="text" name="key" id="kw" maxlength="100" value="{{content.1}}">
+              <span class="btn_wr">
+                <input type="submit" value="fuck_baidu" id="su" class="btn" onmousedown="this.className='btn btn_h'" onmouseout="this.className='btn'"></span>
+            </form>
+          </div>
+        <div>
+            <table border="1">
+                {% block content %}
+                {% if content.0%}
+                <tr>
+                    <td>名称 </td>
+                    <td>详细</td>
+                    <td>磁力链</td>
+                </tr>
+                {%endif%}
+                {% for movie in content.0 %}
+                <tr>
+                    <td>{{movie.0}}</td>
+                    <td>{{movie.1}}</td>
+                    <td>{{movie.2}}</td>
+                </tr>
+                {% endfor %}
+                {% endblock %}
+            </table>
+        <p id="lh">
+            <a href="#">加入fuck_baidu联盟</a>|
+            <a href="#">搜索风云榜</a>|
+            <a href="http://www.cnblogs.com/xiaxinggege/">关于我要养猪</a>|
+            <a href="https://www.instagram.com/sunneryxia/">About woyaoyangzhu</a>
+        </p>
+        </div>
+
+    </div>
+</body>
+</html>
