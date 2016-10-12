@@ -9,6 +9,6 @@ urlpatterns = [
     url(r'^admin', include(admin.site.urls)),
     url(r'^blog', archive),
     url(r'^index', index),
-    url(r'^search', search),
+    url(r'^', search),
 
 ]
