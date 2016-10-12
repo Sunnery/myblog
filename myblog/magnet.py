@@ -6,8 +6,7 @@ Created on 2016-8-15
 '''
 from pyquery import PyQuery as jq
 import sys
-sys.path.append("C:\\workSpace\\tools.py")
-import tools
+from myblog.tools import getHTML,parse_words
 
 #解析Html
 def parse_body(html):
@@ -15,7 +14,7 @@ def parse_body(html):
     doc = jq(html)('.x-item')
     for item in doc:
         item = jq(item)
-        name = tools.parse_words(item, '.title')
+        name = parse_words(item, '.title')
         magnet = jq(item('.title')[1]).attr('href')
         detail = jq(item('.tail')[0]).text()
         #print '名称          ：',name
@@ -33,12 +32,12 @@ def get_bt(key):
     print key
     for i in range(1,1+1):
         url = ''.join(['http://www.nimasou.net/l/',key,'-hot-desc-',str(i)])
-        html = tools.getHTML(url)
+        html = getHTML(url)
         movies = parse_body(html)
     return movies
 
 if __name__ == '__main__':
-    movies = get_bt('你妹')
+    movies = get_bt('1')
     for movie in movies:
         print movie[0]
         print movie[1]
