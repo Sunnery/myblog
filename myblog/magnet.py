@@ -48,17 +48,15 @@ def parse_cilisou(html):
         movies.append(movie)
     return movies
 
-def get_bt(key):
-    print key
-    for i in range(1,1+1):
-        try:
-            url = ''.join(['http://www.btsousousou.com/search/', key, '-first-asc-',str(i), '.html'])
-            html = getHTML(url)
-            movies = parse_cilisou(html)
-        except Exception, ex:
-            url = ''.join(['http://www.nimasou.net/l/',key,'-hot-desc-',str(i)])
-            html = getHTML(url)
-            movies = parse_body(html)
+def get_bt(key,page):
+    try:
+        url = ''.join(['http://www.btsousousou.com/search/', key, '-first-asc-',page, '.html'])
+        html = getHTML(url)
+        movies = parse_cilisou(html)
+    except Exception, ex:
+        url = ''.join(['http://www.nimasou.net/l/',key,'-hot-desc-',page])
+        html = getHTML(url)
+        movies = parse_body(html)
     print url
     return movies
 

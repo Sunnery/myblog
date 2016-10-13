@@ -22,23 +22,25 @@ def index(request):
 
 def search(request):
     key = request.GET.get('key')
+    page = request.GET.get('page')
+    content = {}
     if key == None:
         key = ''
         movies = []
     else:
         try:
-            movies = get_bt(key)
+            movies = get_bt(key,page)
             if movies:
                 print 1
             else:
                 key = 'fuli'
-                movies = get_bt(key)
+                movies = get_bt(key,page)
         except Exception, ex:
             print 1
     t = loader.get_template('index.html')
-    content = []
-    content.append(movies)
-    content.append(key)
+    content['movies'] = movies
+    content['key'] = key
+    content['page'] = page
     c = Context({'content': content})
     return HttpResponse(t.render(c))
 

@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.views.generic.list import ListView
 
 from django.contrib import admin
 admin.autodiscover()
@@ -11,5 +12,4 @@ urlpatterns = [
     url(r'^game', game),
     url(r'^search', search),
     url(r'^', index),
-
 ]
