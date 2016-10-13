@@ -177,4 +177,4 @@ def mkdir(path):
 def getHTML(url):
     page = urllib.urlopen(url.encode('utf-8'))
     html = page.read()
-    return html      
+    return html

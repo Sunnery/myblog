@@ -10,14 +10,21 @@
     <div><strong>你的颜值拖垮了服务器，玩个小游戏冷静下先</strong></div>
     <div><embed src="static/car.swf" width="1000" height="500" usemap="#mp"></embed></div>
     <div>
-        <form name="f" action="/admin">
+        <form id="f" name="f" action="/admin">
           <span class="btn_wr">
-            <input type="submit" value="返回养猪场" id="su" class="btn" onmousedown="this.className='btn btn_h'" onmouseout="this.className='btn'"></span>
+            <input type="button" onclick="ret()" value="返回养猪场" class="btn" onmousedown="this.className='btn btn_h'" onmouseout="this.className='btn'"></span>
             <span class="btn_wr">
-            <input type="submit" value="返回控制台" id="su" class="btn" onmousedown="this.className='btn btn_h'" onmouseout="this.className='btn'"></span>
+            <input type="submit" value="返回控制台" class="btn" onmousedown="this.className='btn btn_h'" onmouseout="this.className='btn'"></span>
         </form>
     </div>
 </div>
 
 </body>
+<script src="static/jquery-3.1.1.min.js"></script>
+<script>
+    function ret(){
+         $('#f').attr("action", "index").submit();
+    }
+
+</script>
 </html>

@@ -26,12 +26,15 @@ def search(request):
         key = ''
         movies = []
     else:
-        movies = get_bt(key)
-        if movies:
-            print 1
-        else:
-            key = 'fuli'
+        try:
             movies = get_bt(key)
+            if movies:
+                print 1
+            else:
+                key = 'fuli'
+                movies = get_bt(key)
+        except Exception, ex:
+            print 1
     t = loader.get_template('index.html')
     content = []
     content.append(movies)
