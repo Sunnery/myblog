@@ -5,6 +5,9 @@ from django.http import HttpResponse
 from myblog.models import BlogPost,Magic
 from myblog.magnet import get_bt
 
+def game(request):
+    raise Exception
+
 def archive(request):
     posts = BlogPost.objects.all()
     t = loader.get_template('archive.html')
@@ -12,14 +15,13 @@ def archive(request):
     return HttpResponse(t.render(c))
 
 def index(request):
-    posts = Magic.objects.all()
+    posts = None
     t = loader.get_template('index.html')
     c = Context({'posts': posts})
     return HttpResponse(t.render(c))
 
 def search(request):
     key = request.GET.get('key')
-    print key
     if key == None:
         key = ''
         movies = []
@@ -30,10 +32,10 @@ def search(request):
         else:
             key = 'fuli'
             movies = get_bt(key)
-
     t = loader.get_template('index.html')
     content = []
     content.append(movies)
     content.append(key)
     c = Context({'content': content})
     return HttpResponse(t.render(c))
+

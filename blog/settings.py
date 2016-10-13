@@ -55,8 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'myblog.middleware.SimpleMiddleware'
 ]
-
 ROOT_URLCONF = 'blog.urls'
 
 TEMPLATES = [
