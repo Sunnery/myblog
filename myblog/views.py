@@ -30,9 +30,7 @@ def search(request):
     else:
         try:
             movies = get_bt(key,page)
-            if movies:
-                print 1
-            else:
+            if not movies:
                 key = 'fuli'
                 movies = get_bt(key,page)
         except Exception, ex:

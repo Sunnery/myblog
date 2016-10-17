@@ -21,3 +21,10 @@ class MagicAdmin(admin.ModelAdmin):
     list_display = ('mid', 'name')
 
 admin.site.register(Magic, MagicAdmin)
+
+class LoginRecord(models.Model):
+    ip = models.CharField(max_length=20)
+    region = models.CharField(max_length=20)
+    time = models.CharField(max_length=20)
+    url = models.CharField(max_length=20)
+    account = models.CharField(max_length=20)
