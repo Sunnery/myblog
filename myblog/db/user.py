@@ -10,11 +10,21 @@ def insertReqLog(LoginRecord):
     cursor.execute(sql, [id,LoginRecord.ip, LoginRecord.region, LoginRecord.time,LoginRecord.url,LoginRecord.account])
     transaction.commit()
 
-def getReqLog():
-    raw_sql = 'select * from LoginRecord'
-    raw_querySet = LoginRecord.objects.raw(raw_sql)
-    for obj in raw_querySet:
-        print obj
+def getReqLog(page,pageNum):
+    start = (page-int(1))*pageNum
+    end = start+pageNum
+    raw_sql = "".join(['select * from myblog_loginrecord t where _rowid >',str(start),' and _rowid <= ',str(end)])
+    print raw_sql
+    LoginRecords = LoginRecord.objects.raw(raw_sql)
+    return LoginRecords
+
+def getReqLogTotalNum():
+    cursor = connection.cursor()
+    sql = "select count(1) from myblog_loginrecord "
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    return row[0]
+
 # def db():
 #     cursor = connection.cursor()  # 获得一个游标(cursor)对象
 #     # 更新操作

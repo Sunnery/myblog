@@ -37,7 +37,6 @@ def lookup(ip):
                 region = 'None'
         except Exception, ex:
             region = 'None'
-    print 'region = ',region
     LoginRecord.ip = ip
     LoginRecord.region = region
     ISOTIMEFORMAT ='%Y-%m-%d %X'

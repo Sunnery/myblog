@@ -5,7 +5,7 @@ Created on 2016-8-15
 @author: 研发
 '''
 from pyquery import PyQuery as jq
-import sys
+import math
 from myblog.tools import getHTML,parse_words
 
 #解析Html
@@ -68,7 +68,7 @@ def test(key):
     movies = parse_cilisou(html)
 
 if __name__ == '__main__':
-    test('haha')
-        
+    print math.ceil(float(149)/10)
+    print(float(149)/10)
 
 

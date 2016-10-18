@@ -10,7 +10,6 @@ class BlogPost(models.Model):
 
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'content', 'timestamp')
-
 admin.site.register(BlogPost, BlogPostAdmin)
 
 class Magic(models.Model):
@@ -20,11 +19,12 @@ class Magic(models.Model):
 class MagicAdmin(admin.ModelAdmin):
     list_display = ('mid', 'name')
 
-admin.site.register(Magic, MagicAdmin)
-
 class LoginRecord(models.Model):
     ip = models.CharField(max_length=20)
     region = models.CharField(max_length=20)
     time = models.CharField(max_length=20)
     url = models.CharField(max_length=20)
     account = models.CharField(max_length=20)
+
+class LoginRecordAdmin(admin.ModelAdmin):
+    list_display = ('ip', 'region','time','url','account')

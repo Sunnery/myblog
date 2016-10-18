@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>访客记录</title>
+	<link rel="stylesheet" href="static/css/style.css" type="text/css">
+    <link REL="SHORTCUT ICON" HREF="static/favicon.ico">
+</head>
+
+<body>
+
+    <table>
+            <tr align="right">
+                <td>
+                    <a id="return" href="/index"><font color="white">首页</font></a>
+                </td>
+            </tr>
+    </table>
+<div id="container">
+	<table class="zebra">
+    <caption>访客记录</caption>
+		<thead>
+        	<tr>
+				<th>IP</th>
+				<th>地区</th>
+				<th>访问时间</th>
+				<th>用户名</th>
+				<th>地址</th>
+            </tr>
+		</thead>
+        <tbody>
+        {% block content %}
+            {% for LoginRecord in content.LoginRecords %}
+                <tr>
+                    <td>{{ LoginRecord.ip}}</td>
+                    <td>{{ LoginRecord.region }}</td>
+                    <td>{{ LoginRecord.time}}</td>
+                    <td>{{ LoginRecord.account}}</td>
+                    <td>{{ LoginRecord.url}}</td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+        </tbody>
+	</table>
+    <table>
+            <tr align="center">
+                <td>
+                    <a href="javascript:" id="pre" onclick="page(-1)"><font color="white">上一页</font></a>
+                    {% for page in content.pages %}
+                        {% if page == content.page %}
+                        <a href="javascript:" onclick="to_page({{page}})"><font color="white" size="6">{{page}}</font></a>
+                        {% else %}
+                        <a href="javascript:" onclick="to_page({{page}})"><font color="white">{{page}}</font></a>
+                        {% endif%}
+                    {% endfor %}
+                    <a href="javascript:" id="next" onclick="page(1)"><font color="white">下一页</font></a>
+                </td>
+            </tr>
+    </table>
+</div>
+<form id="f"action=""></form>
+<form id="pageForm"action="/LoginRecord">
+    <input type="hidden" id="page" name="page"/>
+</form>
+    <input type="hidden" name="thisPage" id="thisPage"  value="{{content.page}}" >
+    <input type="hidden" name="totalNum" id="totalNum"  value="{{content.totalPages}}" >
+</body>
+
+<script src="static/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+       if($("#thisPage").val()==1){
+            $("#pre").css("display","none");
+       }
+       if(Number($("#thisPage").val()) >= Number($("#totalNum").val())){
+            $("#next").css("display","none");
+       }
+     });
+
+
+    $(function(){
+        $("#next").on("click",function(){
+            $('#page').val(nextPage);
+            $('#f').submit();
+        });
+        $("#pre").on("click",function(){
+            $('#page').val(nextPage);
+            $('#f').submit();
+        });
+    });
+
+    function page(p){
+     var page = $('#thisPage').val();
+     if(page==1){
+        if(p==-1){
+            alert("还翻上一页，你是不是傻啊？");
+            return;
+        }
+     }
+     var page = parseInt(page)+parseInt(p);
+     $('#page').val(page);
+     $('#pageForm').submit();
+    }
+
+    function to_page(p){
+     $('#page').val(p);
+     $('#pageForm').submit();
+    }
+
+</script>
+</html>
