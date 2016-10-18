@@ -63,6 +63,8 @@ def LoginRecord(request):
         start = int(totalPages - 9)
     if (end - start)<8:
         end = end + (9-end)
+    if start < 1:
+        start = 0
     for i in range(start ,end+1):
         pages.append(i)
     t = loader.get_template('LoginRecord.html')
