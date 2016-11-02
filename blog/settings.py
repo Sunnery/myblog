@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'myblog.middleware.SimpleMiddleware'
+    #'myblog.middleware.SimpleMiddleware'
 ]
 ROOT_URLCONF = 'blog.urls'
 
@@ -94,8 +94,8 @@ DATABASES = {
         'NAME':'wyyz',
         'USER':'root',
         'PASSWORD':'123',
-        'HOST':'52.78.178.61',
-        #'HOST':'127.0.0.1',
+        #'HOST':'52.78.178.61',
+        'HOST':'127.0.0.1',
         'PORT':'3306',
         }
 }

@@ -1,29 +1,33 @@
 #coding=utf-8
 from django.db import connection,transaction
-from myblog.models import LoginRecord
-from myblog.db.util import getTotalRecordNum
+from myblog.db.util import getMaxId,getRecords
+import  time
+
 
 def insertReqLog(LoginRecord):
     cursor = connection.cursor()
-    id = getTotalRecordNum('myblog_loginrecord')+1
+    id = getMaxId('myblog_loginrecord')+1
     sql = 'insert into myblog_loginrecord(id,ip,region,time,url,account) values(%s,%s,%s,%s,%s,%s)'
     cursor.execute(sql, [id,LoginRecord.ip, LoginRecord.region, LoginRecord.time,LoginRecord.url,LoginRecord.account])
     transaction.commit()
 
-def getReqLog(page,pageNum):
-    start = (page-int(1))*pageNum
-    end = start+pageNum
-    raw_sql = "".join(['select * from myblog_loginrecord t where _rowid >',str(start),' and _rowid <= ',str(end)])
-    print raw_sql
-    LoginRecords = LoginRecord.objects.raw(raw_sql)
-    return LoginRecords
-
-def getReqLogTotalNum():
+def register(user):
     cursor = connection.cursor()
-    sql = "select count(1) from myblog_loginrecord "
-    cursor.execute(sql)
-    row = cursor.fetchone()
-    return row[0]
+    id = getMaxId('myblog_user')
+    sql = 'insert into myblog_user(id,email,creatTime,latestLogin,status,iconUrl,password,nickName,iconUrl_small) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+    cursor.execute(sql,[id, user.email, user.creatTime, user.latestLogin, user.status, user.iconUrl,user.password,user.nickName,user.iconUrl_small])
+    transaction.commit()
+
+def getUserModel(nickName):
+    import sys
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    userModel = getRecords(1,1,'myblog_user','',''.join(['and nickName = "',str(nickName),'"']),'id')
+    ISOTIMEFORMAT = '%Y-%m-%d'
+    u = userModel[0]
+    u.creatTime = time.strftime(ISOTIMEFORMAT, userModel[0].creatTime.timetuple())
+    return u
+
 
 # def db():
 #     cursor = connection.cursor()  # 获得一个游标(cursor)对象

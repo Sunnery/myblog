@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>this's my life</title>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdn.gbtags.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://cdn.gbtags.com/summernote/0.5.2/summernote.css">
+	<link href="static/css/douban.css" rel="stylesheet" type="text/css">
+	<style>
+		.note-editable{
+			height: 520px;
+			}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">SUNNERY</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							 <a href="/index">主页</a>
+						</li>
+						<li>
+							 <a href="/blogList">文章</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<strong class="caret"></strong></a>
+							<ul class="dropdown-menu" style="font-size: 1px; min-width: 80px;width: 12px;">
+								<li>
+									 <a href="/unknow">无主之地</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" />
+						</div>
+						<button type="submit" class="btn btn-default" style="font-size: 1px;">全局搜索</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							{% if user.is_authenticated %}
+								<li class="dropdown">
+								 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}的养猪场<strong class="caret"></strong></a>
+								<ul class="dropdown-menu" style="font-size: 1px;min-width: 117px;width: 12px;left: 1px;">
+									<li>
+										 <a href="/mySpace">我的猪圈</a>
+									</li>
+									<li>
+										 <a href="/blogEdit">发布养猪经验</a>
+									</li>
+									<li>
+										 <a href="/manage">猪圈管理</a>
+									</li>
+									<li>
+										 <a href="/loginOut">退出</a>
+									</li>
+								</ul>
+							</li>
+							{% else %}
+								<li>
+									 <a href="/login">登陆</a>
+								</li>
+								<li>
+									 <a href="/register">注册</a>
+								</li>
+							{% endif %}
+						</li>
+
+					</ul>
+				</div>
+			</nav>
+			<input type="text" class="form-control" id="titl" name="titl" style="margin-bottom: 10px;"  value="请输入文章标题..."/>
+			<div id="summernote">
+			</div>
+			<div class="col-md-12 column">
+				 <button onclick="submit();" type="button" class="btn btn-default" style="padding-top: 6px;margin-top: 24px;margin-left: 480px;">提交</button>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<span id="icp" class="fleft gray-link">
+			© 2016－2017 woyaoyangzhu.cc, all rights reserved
+		</span>
+		<span class="fright">
+			   <a href="/about">关于我要养猪</a>
+			· <a href="/contactus">联系我们</a>
+			· <a href="/disclaimer">免责声明</a>
+			· <a href="/help">帮助中心</a>
+			· <a href="#">移动应用</a>
+			· <a href="/partner">养猪广告</a>
+		</span>
+	</div>
+</div>
+<form id="f"action="/saveBlog" method="post">
+	{% csrf_token %}
+	<input type="hidden" id="content" name="content"/>
+	<input type="hidden" id="userId" name="userId"/>
+	<input type="hidden" id="blogId" name="blogId"/>
+	<input type="hidden" id="title" name="title" value=""/>
+</form>
+
+</body>
+
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://cdn.gbtags.com/summernote/0.5.2/summernote.min.js"></script>
+<script type="text/javascript">
+	$('#summernote').summernote();
+	function submit(){
+		var sHTML = $('#summernote').code();
+		var title = $("#titl").val();
+		var userId = $("#userId").val();
+		$("#content").val(sHTML);
+		$("#userId").val(userId);
+		$("#title").val(title);
+		$("#f").submit();
+	}
+
+	$(function(){
+        $("#titl").on("click",function(){
+        	if($('#titl').val()=="请输入文章标题..."){
+        		$('#titl').val("");
+        	}
+        });
+        $("#titl").blur(function(){
+		  if($('#titl').val()==""){
+        		$('#titl').val("请输入文章标题...");
+        	}
+		});
+    });
+
+</script>
+</html>

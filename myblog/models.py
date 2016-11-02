@@ -28,3 +28,23 @@ class LoginRecord(models.Model):
 
 class LoginRecordAdmin(admin.ModelAdmin):
     list_display = ('ip', 'region','time','url','account')
+
+class blog(models.Model):
+    title = models.CharField(max_length=150)
+    content = models.TextField()
+    timestamp = models.DateTimeField()
+    view    =  models.CharField(max_length=5)
+    authorid = models.CharField(max_length=10)
+
+class user(models.Model):
+    email = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    nickName = models.CharField(max_length=100)
+    creatTime = models.DateTimeField()
+    latestLogin =  models.DateTimeField()
+    status = models.CharField(max_length=1)
+    iconUrl = models.CharField(max_length=100)
+    iconUrl_small = models.CharField(max_length=100)
+
+
+    

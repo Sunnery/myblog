@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+	{% if user.is_authenticated %}
+		{{ user.username }} 的猪圈
+	{% else %}
+		欢迎来到我要养猪
+	{% endif %}
+	</title>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdn.gbtags.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://cdn.gbtags.com/summernote/0.5.2/summernote.css">
+	<link href="static/css/douban.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">SUNNERY</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							 <a href="/index">主页</a>
+						</li>
+						<li>
+							 <a href="/blogList">文章</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<strong class="caret"></strong></a>
+							<ul class="dropdown-menu" style="font-size: 1px; min-width: 80px;width: 12px;">
+								<li>
+									 <a href="/unknow">无主之地</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" />
+						</div>
+						<button type="submit" class="btn btn-default" style="font-size: 1px;">全局搜索</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							{% if user.is_authenticated %}
+								<li class="dropdown">
+								 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}的养猪场<strong class="caret"></strong></a>
+								<ul class="dropdown-menu" style="font-size: 1px;min-width: 117px;width: 12px;left: 1px;">
+									<li>
+										 <a href="/mySpace">我的猪圈</a>
+									</li>
+									<li>
+										 <a href="/blogEdit">发布养猪经验</a>
+									</li>
+									<li>
+										 <a href="/manage">猪圈管理</a>
+									</li>
+									<li>
+										 <a href="/loginOut">退出</a>
+									</li>
+								</ul>
+							</li>
+							{% else %}
+								<li>
+									 <a href="/login">登陆</a>
+								</li>
+								<li>
+									 <a href="/register">注册</a>
+								</li>
+							{% endif %}
+						</li>
+
+					</ul>
+				</div>
+			</nav>
+			<div class="container">
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<div class="row clearfix">
+							<div class="col-md-8 column">
+								<h1 style="margin-bottom: 30px;">
+									{{ content.record.title}}
+								</h1>
+								<div id="contentTxt" style="word-break:break-all;OVERFLOW:auto">
+									{{ content.record.content | safe }}
+								</div>
+							</div>
+							<div class="col-md-4 column">
+								<div class="aside drop-area ui-sortable">
+									<div id="profile">
+									  <div class="infobox">
+										<div class="ex1">
+										  <span></span>
+										</div>
+										<div class="bd"style="width: 296px;">
+										  <div class="basic-info">
+											<img src="{{ content.userModel.iconUrl_small}}" class="userface" alt="" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;">
+											<div class="user-info">常居:&nbsp;
+											  <a href="https://shanghai.douban.com/">上海</a>
+											  <br>
+											  <div class="pl">{{ content.userModel.nickName}}
+												<br>{{ content.userModel.creatTime}}加入</div></div>
+										  </div>
+										  <div class="sep-line"></div>
+										  <div class="user-intro">
+											<div id="edit_intro" class="j edtext pl">
+											  <span id="intro_display">此生若能安稳 谁愿颠沛流离</span>
+											  <span id="intro_disp_act" style="display: inline">(
+												<a class="" href="#">编辑</a>)</span>
+											  <form style="display: none;" action="/j/people/SunneryXia/edit_intro" name="edit_intro" mothod="post">
+												<textarea name="intro" style="overflow: hidden;">此生若能安稳 谁愿颠沛流离</textarea>
+												<br>
+												<input id="intro_submit" class="submit" type="submit" value="保存">
+												<input id="intro_cancel" class="cancel" type="button" value="取消">
+												<div style="position: absolute; display: none; word-wrap: break-word; font-weight: normal; width: 282px; font-family: Arial; line-height: normal; font-size: 12px; padding: 3px;">此生若能安稳&nbsp;谁愿颠沛流离&nbsp;</div></form>
+											  <span id="intro_error" class="attn" style="display: none;"></span>
+											</div>
+										  </div>
+										</div>
+										<div class="ex2">
+										  <span></span>
+										</div>
+									  </div>
+									</div>
+									<script src="https://img3.doubanio.com/f/shire/e59c6f7dddb6754cfe4b9c8fc8c4a0a088b0b3ba/js/jquery_plugin/jquery.elastic.js"></script>
+									<div class="clear"></div>
+									<div id="friend">
+									  <h2>我的关注 &nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·
+										<span class="pl">&nbsp;(
+										  <a href="https://www.douban.com/contacts/list" target="_self">成员16</a>&nbsp;·&nbsp;
+										  <a href="https://www.douban.com/people/SunneryXia/contact_site" target="_self">小站10</a>)</span></h2>
+									  <dl class="obu">
+										<dt>
+										  <a href="https://www.douban.com/people/boys_on_top/" class="nbg">
+											<img src="https://img3.doubanio.com/icon/u2370742-135.jpg" class="m_sub_img" alt="礼士路西岛秀俊"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/people/boys_on_top/">礼士路西岛秀俊</a></dd>
+									  </dl>
+									  <dl class="obu">
+										<dt>
+										  <a href="https://www.douban.com/people/Majere/" class="nbg">
+											<img src="https://img3.doubanio.com/icon/u1003316-5.jpg" class="m_sub_img" alt="majere"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/people/Majere/">majere</a></dd>
+									  </dl>
+									  <dl class="obu">
+										<dt>
+										  <a href="https://www.douban.com/people/happypretty/" class="nbg">
+											<img src="https://img3.doubanio.com/icon/u93219303-11.jpg" class="m_sub_img" alt="寜寜"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/people/happypretty/">寜寜</a></dd>
+									  </dl>
+									  <dl class="obu">
+										<dt>
+										  <a href="https://www.douban.com/people/rodenny/" class="nbg">
+											<img src="https://img3.doubanio.com/icon/u1414911-2.jpg" class="m_sub_img" alt="云淡风不清"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/people/rodenny/">云淡风不清</a></dd>
+									  </dl>
+									  <dl class="obu">
+										<dt>
+										  <a href="https://www.douban.com/people/mimengbb/" class="nbg">
+											<img src="https://img3.doubanio.com/icon/u1464095-10.jpg" class="m_sub_img" alt="咪蒙"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/people/mimengbb/">咪蒙</a></dd>
+									  </dl>
+									  <dl class="obu">
+										<dt>
+										  <a href="https://www.douban.com/people/74081525/" class="nbg">
+											<img src="https://img3.doubanio.com/icon/u74081525-12.jpg" class="m_sub_img" alt="颜彦清"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/people/74081525/">颜彦清</a></dd>
+									  </dl>
+									  <dl class="obu">
+										<dt>
+										  <a href="https://www.douban.com/people/tassadar/" class="nbg">
+											<img src="https://img1.doubanio.com/icon/u2526779-28.jpg" class="m_sub_img" alt="囧叔"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/people/tassadar/">囧叔</a></dd>
+									  </dl>
+									  <dl class="obu">
+										<dt>
+										  <a href="https://www.douban.com/people/49903127/" class="nbg">
+											<img src="https://img3.doubanio.com/icon/u49903127-2.jpg" class="m_sub_img" alt="十三"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/people/49903127/">十三</a></dd>
+									  </dl>
+									  <br clear="all"></div>
+									<p class="rev-link">
+									  <a href="/contacts/rlist">&gt;&nbsp;我被3人关注</a></p>
+									<div class="sort " id="event"></div>
+									<div class="sort " id="online">
+									  <h2>我的线上活动 &nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·
+										<span class="pl">&nbsp;(
+										  <a href="/online/mine" target="_self">全部</a>)</span></h2>
+									  <div>
+										<ul>
+										  <li class="actfromfri">
+											<span class="pl">[已结束]
+											  <a class="pl2" href="https://www.douban.com/online/11744193/">那些年我们哭着读完的小说</a>
+											  <br>
+											  <span class="pl">时间：5月9日 周五 － 7月7日 周一</span>
+											  <br>
+											  <span class="pl">2553人参加</span>
+											  <br>
+											  <div class="ul"></div>
+											</span>
+										  </li>
+										</ul>
+									  </div>
+									  <br></div>
+									<div class="sort " id="doulist">
+									  <a class="lnk-create" href="https://www.douban.com/doulist/new" onclick="moreurl(this, {from:'sns-people-create-doulist-55703481'})">
+										<i>＋</i>创建豆列</a>
+									  <h2>我的豆列 &nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·
+										<span class="pl">&nbsp;(
+										  <a href="https://www.douban.com/people/SunneryXia/doulists/" target="_self">全部7</a>)</span></h2>
+									  <ul class="doulist-list">
+										<li>
+										  <a href="https://www.douban.com/doulist/30134419/">剁手！！ (20)</a></li>
+										<li>
+										  <a href="https://www.douban.com/doulist/38418568/">从此只看买家秀 (3)</a></li>
+										<li>
+										  <a href="https://www.douban.com/doulist/39824184/">马克 (2)</a></li>
+										<li>
+										  <a href="https://www.douban.com/doulist/26126225/">Big Fish的日记 (1)</a></li>
+										<li>
+										  <a href="https://www.douban.com/doulist/34223413/">那天 我搭上了去上海的绿皮 (16)</a></li>
+									  </ul>
+									  <div class="clear"></div>
+									</div>
+									<div class="sort " id="group">
+									  <h2>我常去的小组(18) &nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·
+										<span class="pl">&nbsp;(
+										  <a href="/group/mine" target="_blank">全部</a>)</span></h2>
+									  <dl class="ob ">
+										<dt>
+										  <a href="https://www.douban.com/group/asshole/" target="_blank">
+											<img src="https://img3.doubanio.com/icon/g60439-3.jpg" class="m_sub_img" alt="我总觉得自己就是一个傻逼"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/group/asshole/" class="" target="_blank">我总觉得自己就是一个傻逼</a>
+										  <span>(1167982)</span></dd>
+									  </dl>
+									  <dl class="ob ">
+										<dt>
+										  <a href="https://www.douban.com/group/zhuangb/" target="_blank">
+											<img src="https://img1.doubanio.com/icon/g17947-8.jpg" class="m_sub_img" alt="文艺青年装逼会"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/group/zhuangb/" class="" target="_blank">文艺青年装逼会</a>
+										  <span>(608197)</span></dd>
+									  </dl>
+									  <dl class="ob ">
+										<dt>
+										  <a href="https://www.douban.com/group/program/" target="_blank">
+											<img src="https://img3.doubanio.com/icon/g67063-10.jpg" class="m_sub_img" alt="❤♥嫁人就嫁程序员"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/group/program/" class="" target="_blank">❤♥嫁人就嫁程序员</a>
+										  <span>(9168)</span></dd>
+									  </dl>
+									  <dl class="ob ">
+										<dt>
+										  <a href="https://www.douban.com/group/runners/" target="_blank">
+											<img src="https://img3.doubanio.com/icon/g19314-6.jpg" class="m_sub_img" alt="喜欢跑步的人"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/group/runners/" class="" target="_blank">喜欢跑步的人</a>
+										  <span>(273789)</span></dd>
+									  </dl>
+									  <dl class="ob ">
+										<dt>
+										  <a href="https://www.douban.com/group/JD/" target="_blank">
+											<img src="https://img3.doubanio.com/icon/g14954-23.jpg" class="m_sub_img" alt="代购之家&amp;海淘"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/group/JD/" class="" target="_blank">代购之家&amp;海淘</a>
+										  <span>(497258)</span></dd>
+									  </dl>
+									  <dl class="ob ">
+										<dt>
+										  <a href="https://www.douban.com/group/Eminem/" target="_blank">
+											<img src="https://img3.doubanio.com/icon/g15888-5.jpg" class="m_sub_img" alt="Eminem"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/group/Eminem/" class="" target="_blank">Eminem</a>
+										  <span>(12086)</span></dd>
+									  </dl>
+									  <dl class="ob ">
+										<dt>
+										  <a href="https://www.douban.com/group/buybook/" target="_blank">
+											<img src="https://img3.doubanio.com/icon/g10233-3.jpg" class="m_sub_img" alt="买书如山倒 读书如抽丝"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/group/buybook/" class="" target="_blank">买书如山倒 读书如抽丝</a>
+										  <span>(330948)</span></dd>
+									  </dl>
+									  <dl class="ob ">
+										<dt>
+										  <a href="https://www.douban.com/group/papijiang/" target="_blank">
+											<img src="https://img3.doubanio.com/icon/g586806-4.jpg" class="m_sub_img" alt="papi酱"></a>
+										</dt>
+										<dd>
+										  <a href="https://www.douban.com/group/papijiang/" class="" target="_blank">papi酱</a>
+										  <span>(3088)</span></dd>
+									  </dl>
+									  <div class="clear"></div>
+									</div>
+									<p class="pl2">
+									  <a href="/service/badgemaker">&gt; 添加我的豆瓣收藏秀</a></p>
+									<br>
+									<div class="clear"></div>
+									<p class="pl">本页永久链接:
+									  <a href="https://www.douban.com/people/SunneryXia/">http://www.douban.com/people/SunneryXia/</a></p>
+									<p class="pl">订阅我的收藏:
+									  <br>
+									  <span class="feed">
+										<a href="https://www.douban.com/feed/people/SunneryXia/interests">feed: rss 2.0</a></span>
+									</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<span id="icp" class="fleft gray-link">
+			© 2016－2017 woyaoyangzhu.cc, all rights reserved
+		</span>
+		<span class="fright">
+			   <a href="/about">关于我要养猪</a>
+			· <a href="/contactus">联系我们</a>
+			· <a href="/disclaimer">免责声明</a>
+			· <a href="/help">帮助中心</a>
+			· <a href="#">移动应用</a>
+			· <a href="/partner">养猪广告</a>
+		</span>
+	</div>
+</div>
+<form id="f"action=""></form>
+<form id="pageForm"action="/blogList">
+    <input type="hidden" id="page" name="page"/>
+</form>
+    <input type="hidden" name="thisPage" id="thisPage"  value="{{content.page}}" >
+    <input type="hidden" name="totalNum" id="totalNum"  value="{{content.totalPages}}" >
+
+</body>
+
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://cdn.gbtags.com/summernote/0.5.2/summernote.min.js"></script>
+<script type="text/javascript">
+</script>
+</html>

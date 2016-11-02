@@ -30,7 +30,7 @@
 		</thead>
         <tbody>
         {% block content %}
-            {% for LoginRecord in content.LoginRecords %}
+            {% for LoginRecord in content.records %}
                 <tr>
                     <td>{{ LoginRecord.ip}}</td>
                     <td>{{ LoginRecord.region }}</td>
@@ -66,7 +66,7 @@
     <input type="hidden" name="totalNum" id="totalNum"  value="{{content.totalPages}}" >
 </body>
 
-<script src="static/jquery-3.1.1.min.js"></script>
+<script src="static/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
     $(function(){
        if($("#thisPage").val()==1){

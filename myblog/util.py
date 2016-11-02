@@ -3,6 +3,8 @@ import requests
 import time
 from myblog.db.user import insertReqLog
 from myblog.models import LoginRecord
+from qiniu import Auth, put_file, etag,put_data,put_stream
+import hashlib
 
 def get_client_ip(request):
     try:
@@ -13,9 +15,9 @@ def get_client_ip(request):
         regip = request.META['REMOTE_ADDR']
       except:
         regip = ""
-    lookup(regip)
+    lookup(regip,request)
 
-def lookup(ip):
+def lookup(ip,request):
     ips = {'ip': ip}
     URL = 'http://ip.taobao.com/service/getIpInfo.php'
     region = ''
@@ -41,6 +43,29 @@ def lookup(ip):
     LoginRecord.region = region
     ISOTIMEFORMAT ='%Y-%m-%d %X'
     LoginRecord.time = time.strftime(ISOTIMEFORMAT, time.localtime())
-    LoginRecord.url = '哈哈'
-    LoginRecord.account = 'None'
+    LoginRecord.url = request.get_full_path()
+    LoginRecord.account = request.user.id
     insertReqLog(LoginRecord)
+
+def getTime():
+    ISOTIMEFORMAT = '%Y-%m-%d %X'
+    return time.strftime(ISOTIMEFORMAT, time.localtime())
+
+def qiniuUpload(key,data):
+  # 需要填写你的 Access Key 和 Secret Key
+  access_key = "6Ct_gOzm6X2bo_LQchKhOKMkSMhYmajFJiuPh5oc"
+  secret_key = "sbQMnyz96cQnh97uRaTkSqOQj022F0EX8hhuo-n-"
+  # 构建鉴权对象
+  q = Auth(access_key, secret_key)
+  # 要上传的空间
+  bucket_name = 'publicpicture'
+  # 生成上传 Token，可以指定过期时间等
+  token = q.upload_token(bucket_name, key, 3600)
+  # 要上传文件的本地路径
+  ret, info = put_data(token, key, data)
+  return 'http://ofjorzzw5.bkt.clouddn.com/' + key
+
+def getMD5(str):
+    m2 = hashlib.md5()
+    m2.update('str')
+    return m2.hexdigest()

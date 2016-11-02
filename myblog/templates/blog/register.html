@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>this's my life</title>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdn.gbtags.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://cdn.gbtags.com/summernote/0.5.2/summernote.css">
+	<link href="static/css/douban.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="static/css/upload-style.css" type="text/css" />
+</head>
+<body>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">SUNNERY</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							 <a href="/index">主页</a>
+						</li>
+						<li>
+							 <a href="/blogList">文章</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<strong class="caret"></strong></a>
+							<ul class="dropdown-menu" style="font-size: 1px; min-width: 80px;width: 12px;">
+								<li>
+									 <a href="/unknow">无主之地</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" />
+						</div>
+						<button type="submit" class="btn btn-default" style="font-size: 1px;">全局搜索</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							{% if user.is_authenticated %}
+								<li class="dropdown">
+								 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}的养猪场<strong class="caret"></strong></a>
+								<ul class="dropdown-menu" style="font-size: 1px;min-width: 117px;width: 12px;left: 1px;">
+									<li>
+										 <a href="/mySpace">我的猪圈</a>
+									</li>
+									<li>
+										 <a href="/blogEdit">发布养猪经验</a>
+									</li>
+									<li>
+										 <a href="/manage">猪圈管理</a>
+									</li>
+									<li>
+										 <a href="/loginOut">退出</a>
+									</li>
+								</ul>
+							</li>
+							{% else %}
+								<li>
+									 <a href="/login">登陆</a>
+								</li>
+								<li>
+									 <a href="/register">注册</a>
+								</li>
+							{% endif %}
+						</li>
+
+					</ul>
+				</div>
+			</nav>
+			<div class="container">
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<div class="row clearfix">
+							<div class="col-md-8 column">
+								<h1 style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0px 30px; font-size: 25px; font-weight: bold; color: rgb(73, 73, 73); word-wrap: break-word; font-family: arial, helvetica, sans-serif;">欢迎加入我要养猪</h1>
+								<form class="form-horizontal" role="form" id="fo" method="post" action="registerConfirm"  enctype="multipart/form-data" >{% csrf_token %}
+									<table>{{form.as_table}}
+									<div class="form-group">
+										 <label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+										<div class="col-sm-10">
+											<input type="email" class="form-control" id="inputEmail3" name="inputEmail3"  style="width: 250px;"/>
+                                            <span style="display: none; color:red" id="emailWarning"></span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										 <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+										<div class="col-sm-10">
+											<input type="password" class="form-control" id="inputPassword3" name="inputPassword3" style="width: 250px;"/>
+										</div>
+									</div>
+									<div class="form-group">
+										 <label for="inputPassword3" class="col-sm-2 control-label">名号</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="nickName" name="nickName" style="width: 250px;"/>
+                                            <span style="display: none; color:red" id="nickNameWarning"></span>
+                                            <span style="color:red" id="imgWarning"></span>
+										</div>
+									</div>
+									<div class="container" style="border-left-width: 0px;margin-left: 59px;">
+									  <div class="imageBox" >
+										<div class="thumbBox"></div>
+										<div class="spinner" style="display: none">Loading...</div>
+									  </div>
+									  <div class="action">
+										<!-- <input type="file" id="file" style=" width: 200px">-->
+										<div class="new-contentarea tc"> <a href="javascript:void(0)" class="upload-img">
+										  <label for="upload-file">上传图像</label>
+										  </a>
+										  <input type="file" class="" name="upload-file" id="upload-file" />
+                                            <input type="hidden" class="" name="icon_small" id="icon_small" />
+										</div>
+										<input type="button" id="btnCrop"  class="Btnsty_peyton" value="裁切">
+										<input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+"  >
+										<input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-" >
+									  </div>
+										<div class="cropped" style="margin-right: 779px;"></div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-2 col-sm-10" style="padding-left: 112px;">
+											 <button id="register" disabled="disabled" type="button" class="btn btn-default">注册</button>
+										</div>
+									</div>
+									</table>
+								</form>
+							</div>
+							<div class="col-md-4 column" style="padding-top: 102px;">
+								&gt;&nbsp;已经拥有养猪资质? <a rel="nofollow" href="/login">直接登录</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div id="footer">
+                <span id="icp" class="fleft gray-link">
+                    © 2016－2017 woyaoyangzhu.cc, all rights reserved
+                </span>
+                <span class="fright">
+					   <a href="/about">关于我要养猪</a>
+					· <a href="/contactus">联系我们</a>
+					· <a href="/disclaimer">免责声明</a>
+					· <a href="/help">帮助中心</a>
+					· <a href="#">移动应用</a>
+					· <a href="/partner">养猪广告</a>
+                </span>
+            </div>
+		</div>
+	</div>
+</div>
+
+</body>
+
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://cdn.gbtags.com/summernote/0.5.2/summernote.min.js"></script>
+<script type="text/javascript" src="static/js/cropbox.js"></script>
+<script type="text/javascript">
+    $.ajaxSetup({
+        async : false
+    });
+
+	$(window).load(function() {
+	$("#inputEmail3").focus();
+	var options =
+	{
+		thumbBox: '.thumbBox',
+		spinner: '.spinner',
+		imgSrc: 'static/img/avatar.png'
+	}
+	var cropper = $('.imageBox').cropbox(options);
+	$('#upload-file').on('change', function(){
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			options.imgSrc = e.target.result;
+			cropper = $('.imageBox').cropbox(options);
+		}
+		reader.readAsDataURL(this.files[0]);
+		this.files = [];
+	})
+	$('#btnCrop').on('click', function(){
+		var img = cropper.getDataURL();
+		$('.cropped').html('');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;"><p>128px*128px</p>');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:180px;margin-top:4px;border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>');
+	})
+	$('#btnZoomIn').on('click', function(){
+		cropper.zoomIn();
+	})
+	$('#btnZoomOut').on('click', function(){
+		cropper.zoomOut();
+	})
+
+	$('#register').on('click', function(){
+	    var img =  $("#upload-file").val();
+	    if (typeof($(".cropped img")[0]) == "undefined" || img == ''){
+            $("#imgWarning").html("请上传头像并裁剪！");
+            $("#imgWarning").css('display','block');
+            return;
+        }
+		var file = $("#upload-file").val();
+		var imgs = $(".cropped img");
+		$("#icon_small").val(imgs[0].src);
+		$("#fo").submit();
+	})
+
+	$('#inputEmail3').on('blur', function(){
+	    var result = check(0);
+	    if(result != 0){
+	        $("#emailWarning").html("咦？此邮箱已被使用，是不是八百年前注册过?<a>登陆</a>试试");
+	        $("#emailWarning").css('display','block');
+	        $("#inputEmail3").focus();
+	    }else{
+            ifSubmit();
+            $("#emailWarning").css('display','none');
+	    }
+	})
+
+	$('#nickName').on('blur', function(){
+	    var result = check(1);
+	    if(result != 0){
+	        $("#nickNameWarning").html("您来晚了，该名号已被占用！");
+	        $("#nickNameWarning").css('display','block');
+	        $("#nickName").focus();
+	    }else{
+            ifSubmit();
+            $("#nickNameWarning").css('display','none');
+	    }
+	})
+
+	$('#btnCrop').on('click', function(){
+	    $("#imgWarning").css('display','none');
+	})
+
+	function check(num){
+	    var result = 0;
+	    var email = $("#inputEmail3").val();
+	    var nickName = $("#nickName").val();
+	    $.get("/registerCheck",{'checkType':num,'email':email,"nickName":nickName}, function(ret){
+            result = ret.result;
+        })
+        return result;
+	}
+
+	function ifSubmit(){
+	    emaill = $("#inputEmail3").val();
+	    nickName = $("#nickName").val();
+        if(emaill!="" &&nickName!=""){
+            $("#register").attr("disabled",false);
+        }
+	}
+});
+</script>
+</html>

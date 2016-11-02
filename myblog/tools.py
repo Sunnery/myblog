@@ -6,9 +6,9 @@ Created on 2016-8-11
 '''
 import socket
 import ssl
-from pyquery import PyQuery as jq
 import urllib
 import os
+from pyquery import PyQuery as jq
 
 
 def parsed_url(url):
