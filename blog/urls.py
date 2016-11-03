@@ -3,30 +3,30 @@ from django.views.generic import RedirectView
 from django.contrib import admin
 admin.autodiscover()
 
-from myblog.views import archive,index,search,game,LoginRecord,ajaxTest,ajax_dict,blogIndex,blogList,blogDetail,blogEdit,saveBlog,register,registerConfirm,registerCheck,login,loginCheck,loginConfirm,loginOut,resetPassword,resetpwdConfirm
+from myblog.views import archive,indexpage,search,game,loginrecord,ajaxtest,ajax_dict,blogindex,bloglist,blogdetail,blogedit,saveblog,register,registerconfirm,registercheck,login,logincheck,loginconfirm,loginout,resetpassword,resetpwdconfirm
 
 urlpatterns = [
     url(r'^admin', include(admin.site.urls)),
-    url(r'^registerConfirm', registerConfirm),
-    url(r'^registerCheck', registerCheck),
+    url(r'^registerConfirm', registerconfirm),
+    url(r'^registerCheck', registercheck),
     url(r'^register', register),
-    url(r'^loginCheck', loginCheck),
-    url(r'^loginConfirm', loginConfirm),
-    url(r'^loginOut', loginOut),
+    url(r'^loginCheck', logincheck),
+    url(r'^loginConfirm', loginconfirm),
+    url(r'^loginOut', loginout),
     url(r'^login', login),
-    url(r'^resetPassword', resetPassword),
-    url(r'^resetpwdConfirm', resetpwdConfirm),
-    url(r'^blogIndex', blogIndex),
-    url(r'^blogList', blogList),
-    url(r'^blogDetail', blogDetail),
-    url(r'^blogEdit', blogEdit),
-    url(r'^saveBlog', saveBlog),
+    url(r'^resetPassword', resetpassword),
+    url(r'^resetpwdConfirm', resetpwdconfirm),
+    url(r'^blogIndex', blogindex),
+    url(r'^blogList', bloglist),
+    url(r'^blogDetail', blogdetail),
+    url(r'^blogEdit', blogedit),
+    url(r'^saveBlog', saveblog),
     url(r'^blog', archive),
     url(r'^game', game),
     url(r'^search', search),
-    url(r'^LoginRecord', LoginRecord),
-    url(r'^ajaxTest', ajaxTest),
+    url(r'^LoginRecord', loginrecord),
+    url(r'^ajaxTest', ajaxtest),
     url(r'^ajax_dict', ajax_dict),
     url(r'^favicon\.ico$', RedirectView.as_view(url='static/favicon.ico')),
-    url(r'^', index),
+    url(r'^', indexpage),
 ]

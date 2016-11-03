@@ -3,8 +3,9 @@ import requests
 import time
 from myblog.db.user import insertReqLog
 from myblog.models import LoginRecord
-from qiniu import Auth, put_file, etag,put_data,put_stream
+from qiniu import Auth, put_data
 import hashlib
+
 
 def get_client_ip(request):
     try:
@@ -16,6 +17,7 @@ def get_client_ip(request):
       except:
         regip = ""
     lookup(regip,request)
+
 
 def lookup(ip,request):
     ips = {'ip': ip}
@@ -37,19 +39,21 @@ def lookup(ip,request):
                 # print '所属运营商：' + json_data[u'data'][u'isp'].encode('utf-8')
             else:
                 region = 'None'
-        except Exception, ex:
+        except Exception:
             region = 'None'
     LoginRecord.ip = ip
     LoginRecord.region = region
-    ISOTIMEFORMAT ='%Y-%m-%d %X'
-    LoginRecord.time = time.strftime(ISOTIMEFORMAT, time.localtime())
+    fmt ='%Y-%m-%d %X'
+    LoginRecord.time = time.strftime(fmt, time.localtime())
     LoginRecord.url = request.get_full_path()
     LoginRecord.account = request.user.id
     insertReqLog(LoginRecord)
 
+
 def getTime():
     ISOTIMEFORMAT = '%Y-%m-%d %X'
     return time.strftime(ISOTIMEFORMAT, time.localtime())
+
 
 def qiniuUpload(key,data):
   # 需要填写你的 Access Key 和 Secret Key
@@ -64,6 +68,7 @@ def qiniuUpload(key,data):
   # 要上传文件的本地路径
   ret, info = put_data(token, key, data)
   return 'http://ofjorzzw5.bkt.clouddn.com/' + key
+
 
 def getMD5(str):
     m2 = hashlib.md5()
